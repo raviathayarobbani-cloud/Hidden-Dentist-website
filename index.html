@@ -10,8 +10,85 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .section { margin-bottom: 40px; }
         .services { display: flex; flex-wrap: wrap; justify-content: space-around; }
-        .service { background: white; padding: 20px; margin: 10px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; text-align: center; }
-        .service img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        .service { 
+            background: white; 
+            padding: 20px; 
+            margin: 10px; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            width: 300px; 
+            text-align: center; 
+            transition: all 0.3s ease; 
+            opacity: 0; 
+            transform: translateY(50px); 
+            cursor: pointer; 
+        }
+        .service.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .service:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        }
+        .service img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            margin-bottom: 15px; 
+            transition: transform 0.3s ease; 
+        }
+        .service:hover img { 
+            transform: scale(1.05); 
+        }
+        /* Modal Styles */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.8); 
+            animation: fadeIn 0.3s ease; 
+        }
+        .modal-content { 
+            background-color: white; 
+            margin: 10% auto; 
+            padding: 20px; 
+            border-radius: 8px; 
+            width: 80%; 
+            max-width: 600px; 
+            text-align: center; 
+        }
+        .close { 
+            color: #aaa; 
+            float: right; 
+            font-size: 28px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+        .close:hover { 
+            color: black; 
+        }
+        .gallery { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 10px; 
+        }
+        .gallery img { 
+            width: 150px; 
+            height: 150px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
         footer { background-color: #333; color: white; text-align: center; padding: 20px; }
         img { max-width: 100%; height: auto; }
         button { background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
@@ -21,44 +98,60 @@
 <body>
     <header>
         <h1>Selamat Datang di Hidden Dentist</h1>
-        <p>Perawatan gigi modern dan nyaman untuk senyum yang lebih cerah.</p>
+        <p>Punya keluhan gigi atau sekadar ingin periksa rutin? Di Hidden dentist, kami siap memberikan pelayanan terbaik untuk senyum sehatmu. ✨🦷 Yuk, konsultasikan sekarang! Info lengkap klik konsultasi dibawah 📲.</p>
         <img src="clinic-image.jpg" alt="Klinik Gigi Sehat" style="max-width: 400px; margin-top: 20px;">
     </header>
 
     <div class="container">
         <section class="section" id="about">
             <h2>Tentang Kami</h2>
-            <p>Hidden Dentist adalah tempat terpercaya untuk perawatan gigi keluarga. Kami menawarkan layanan seperti Bracket gigi,scalling,tumpatan dan pencabutan gigi dengan teknologi terkini.</p>
+            <p>"Hidden Dentist adalah tempat terpercaya untuk perawatan gigi keluarga. Kami menawarkan layanan seperti Bracket gigi,scalling,tumpatan dan pencabutan gigi dengan teknologi terkini.".</p>
         </section>
 
         <section class="section" id="services">
             <h2>Layanan Kami</h2>
             <div class="services">
-                <div class="service">
-                    <img src="bracket-gigi.jpeg" alt="bracket-gigi">
+                <div class="service" data-service="cleaning">
+                    <img src="bracket-gigi.jpeg" alt="Pembersihan Gigi">
                     <h3>Bracket gigi</h3>
                     <p>ortodonti cekat yang ditempelkan pada permukaan gigi untuk merapikan posisi gigi, memperbaiki gigitan, dan meningkatkan estetika senyum.</p>
                 </div>
-                <div class="service">
-                    <img src="scalling-gigi.jpeg" alt="scalling-gigi">
+                <div class="service" data-service="rootcanal">
+                    <img src="scalling-gigi.jpeg" alt="Perawatan Saluran Akar">
                     <h3>Scalling gigi</h3>
                     <p>Hindari infeksi dengan pembersihan karang gigi.</p>
                 </div>
-                <div class="service">
-                    <img src="tumpatan.jpg" alt="tumpatan">
-                    <h3>Tumpatan</h3>
-                    <p>Mengembalikan bentuk gigi depan agar terlihat bagus dan percaya diri..</p>
+                <div class="service" data-service="implant">
+                    <img src="tumpatan.jpg" alt="Implan Gigi">
+                    <h3>tumpatan</h3>
+                    <p>Mengembalikan bentuk gigi depan agar terlihat bagus dan percaya diri.</p>
+                </div>
+                <div class="service" data-service="bleaching">
+                    <img src="pencabutan.jpeg" alt="Bleaching Gigi">
+                    <h3>Pencabutan Gigi</h3>
+                    <p>Putihkan gigi Anda untuk senyum yang lebih percaya diri.</p>
                 </div>
             </div>
         </section>
 
         <section class="section" id="contact">
             <h2>Kontak Kami</h2>
-            <p>Alamat: Jl. Manukan Tama No.178, Manukan Kulon, Kec. Tandes, Surabaya, Jawa Timur 60185 https://maps.app.goo.gl/dHYdpbztGPFbG7gz6</p>
+            <p>Alamat: Jl. Manukan Tama No.178, Manukan Kulon, Kec. Tandes, Surabaya, Jawa Timur 60185</p>
             <p>Telepon: +62 896-0316-4983</p>
-            <p>Email: ArtieDeptilia.com</p>
+            <p>Email: Ariedeptilia@gmail.com</p>
             <button id="whatsapp-btn">Jadwalkan Konsultasi via WhatsApp</button>
         </section>
+    </div>
+
+    <!-- Modal untuk Galeri Foto -->
+    <div id="service-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Hasil Layanan</h2>
+            <div class="gallery" id="modal-gallery">
+                <!-- Gambar akan diisi oleh JavaScript -->
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -68,14 +161,71 @@
     <script>
         // JavaScript untuk mengarahkan tombol ke WhatsApp
         document.getElementById('whatsapp-btn').addEventListener('click', function() {
-            // Nomor WhatsApp (diperbarui dengan nomor Anda: +62 822-2953-0909)
             var phoneNumber = '6289603164983';
-            // Pesan pra-disi (encode untuk URL)
             var message = encodeURIComponent('Halo, saya ingin jadwal konsultasi di Klinik Gigi Sehat.');
-            // Link WhatsApp
             var whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + message;
-            // Buka di tab baru
             window.open(whatsappUrl, '_blank');
+        });
+
+        // JavaScript untuk animasi scroll pada layanan
+        const services = document.querySelectorAll('.service');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        services.forEach(service => {
+            observer.observe(service);
+        });
+
+        // JavaScript untuk modal galeri foto
+        const modal = document.getElementById('service-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalGallery = document.getElementById('modal-gallery');
+        const closeBtn = document.querySelector('.close');
+
+        // Data gambar per layanan (placeholder dari Unsplash, termasuk yang baru)
+        const serviceImages = {
+            cleaning: [
+                'bracket1.jpeg',
+                'bracket2.jpeg',
+                'bracket3.jpeg'
+            ],
+            rootcanal: [
+                'Scalling1.jpeg',
+                'Scalling2.jpeg',
+                'Scalling3.jpeg'
+            ],
+            implant: [
+                'tumpatan1.jpeg',
+                'tumpatan2.jpeg',
+                'tumpatan3.jpeg'
+            ],
+            bleaching: [
+                'pencabutan1.jpeg',
+                'pencabutan2.jpeg',
+                'pencabutan3.jpeg'
+            ]
+        };
+
+        // Event listener untuk klik kartu layanan
+        services.forEach(service => {
+            service.addEventListener('click', function() {
+                const serviceType = this.getAttribute('data-service');
+                const images = serviceImages[serviceType];
+                modalTitle.textContent = `Hasil ${this.querySelector('h3').textContent}`;
+                modalGallery.innerHTML = images.map(img => `<img src="${img}" alt="Hasil Layanan">`).join('');
+                modal.style.display = 'block';
+            });
+        });
+
+        // Tutup modal saat klik close atau di luar modal
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
         });
     </script>
 </body>
